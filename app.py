@@ -19,7 +19,23 @@ CHANNELS = 1  # Mono
 RATE = 44100
 
 audio = pyaudio.PyAudio()
-stream = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK)
+
+# Find "Stereo Mix" device index
+selected_device_index = None
+for i in range(audio.get_device_count()):
+    dev_info = audio.get_device_info_by_index(i)
+    if "Stereo Mix" in dev_info.get('name', ''):
+        selected_device_index = i
+        break
+
+stream = audio.open(
+    format=FORMAT,
+    channels=CHANNELS,
+    rate=RATE,
+    input=True,
+    frames_per_buffer=CHUNK,
+    input_device_index=selected_device_index  # Use Stereo Mix device
+)
 
 # Create a screen object
 screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.NOFRAME)
