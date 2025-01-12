@@ -10,7 +10,7 @@ info = pygame.display.Info()
 WIDTH, HEIGHT = info.current_w, info.current_h
 BACKGROUND_COLOR = (0, 0, 0)
 LINE_COLOR = (255, 255, 255)
-AMPLITUDE = HEIGHT // 0.02
+AMPLITUDE = HEIGHT // 1  # Make the wave less sensitive
 
 # PyAudio setup
 CHUNK = 1024
